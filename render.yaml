@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: doc-analyzer
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: OPENAI_API_KEY
+        value: your-openai-key-here
+      - key: AWS_ACCESS_KEY_ID
+        value: your-aws-access-key
+      - key: AWS_SECRET_ACCESS_KEY
+        value: your-aws-secret-key
+      - key: AWS_REGION
+        value: your-region-name
+      - key: PORT
+        value: 8000

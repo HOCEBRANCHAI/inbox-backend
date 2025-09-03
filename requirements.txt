@@ -1,0 +1,15 @@
+# requirements.txt
+fastapi
+uvicorn
+gunicorn
+python-multipart
+streamlit
+requests
+openai
+python-dotenv
+boto3
+pdfplumber
+openpyxl
+python-docx
+Pillow
+pandas
