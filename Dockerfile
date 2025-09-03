@@ -5,7 +5,7 @@ FROM python:3.10.13-slim
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Install system dependencies (Tesseract has been removed)
+# Install system dependencies
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         poppler-utils \
@@ -19,6 +19,10 @@ WORKDIR /app
 # Create a non-root user and switch to it
 RUN useradd --create-home appuser
 USER appuser
+
+# --- SOLUTION ---
+# Add the user's local bin directory to the PATH
+ENV PATH="/home/appuser/.local/bin:${PATH}"
 
 # Install Python dependencies (leveraging build cache)
 COPY --chown=appuser:appuser requirements.txt .
