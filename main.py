@@ -55,8 +55,7 @@ async def process_single_file(file: UploadFile) -> dict:
         if not extracted_text or not extracted_text.strip():
             return {
                 "filename": file.filename,
-                "error": "Failed to extract text from document.",
-                "status": "failed"
+                "error": "Failed to extract text from document."
             }
 
         # 2. Classify the document type
@@ -80,17 +79,14 @@ async def process_single_file(file: UploadFile) -> dict:
         return {
             "filename": file.filename,
             "document_type": doc_type,
-            "analysis": analysis_result,
-            "status": "success",
-            "extracted_text": extracted_text[:1000]  # Keep first 1000 chars for reference
+            "analysis": analysis_result
         }
 
     except Exception as e:
         logging.error(f"Error processing file {file.filename}: {e}")
         return {
             "filename": file.filename,
-            "error": str(e),
-            "status": "failed"
+            "error": str(e)
         }
     finally:
         # Clean up the temporary file
@@ -155,9 +151,9 @@ async def health_check():
 
 @app.post("/analyze")
 async def analyze_single(file: UploadFile = File(...)):
-    """Analyze a single document (backward compatibility)."""
+    """Analyze a single document."""
     result = await process_single_file(file)
-    if result.get("status") == "failed":
+    if "error" in result:
         raise HTTPException(status_code=500, detail=result.get("error", "Unknown error"))
     return result
 
